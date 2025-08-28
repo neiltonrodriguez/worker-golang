@@ -39,3 +39,15 @@ func (s *OrderService) CreateOrder(ctx context.Context, request *domain.OrderReq
 
 	return config.SendMessageToSQS(ctx, string(messageBody))
 }
+
+func (s *OrderService) GetOrder(ctx context.Context, orderID string) (*domain.Order, error) {
+	var order domain.Order
+	result := s.db.First(&order, orderID)
+	if result.Error != nil {
+		if result.Error == gorm.ErrRecordNotFound {
+			return nil, nil
+		}
+		return nil, result.Error
+	}
+	return &order, nil
+}

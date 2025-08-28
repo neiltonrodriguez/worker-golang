@@ -42,3 +42,27 @@ func (h *OrderHandler) CreateOrder(c echo.Context) error {
 		"message": "Pedido em análise",
 	})
 }
+
+func (h *OrderHandler) GetOrderStatus(c echo.Context) error {
+	orderId := c.Param("id")
+	if orderId == "" {
+		return c.JSON(http.StatusBadRequest, map[string]string{
+			"error": "Order ID is required",
+		})
+	}
+
+	order, err := h.orderService.GetOrder(c.Request().Context(), orderId)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{
+			"error": "Failed to get order status",
+		})
+	}
+
+	if order == nil {
+		return c.JSON(http.StatusNotFound, map[string]string{
+			"error": "Order not found",
+		})
+	}
+
+	return c.JSON(http.StatusOK, order)
+}

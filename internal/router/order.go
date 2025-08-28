@@ -15,4 +15,5 @@ func RegisterRoutes(e *echo.Echo, db *database.DB) {
 
 	orders := e.Group("/orders")
 	orders.POST("/", orderHandler.CreateOrder).Name = "create-order"
+	orders.GET("/:id", orderHandler.GetOrderStatus).Name = "get-order-status"
 }
