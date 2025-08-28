@@ -45,7 +45,6 @@ func (cfg *AppConfig) LoadVariables(envPath ...string) error {
 		log.Println(".env file not found. Loading from system environment", err)
 	}
 
-	// Database config
 	dbPort, _ := strconv.Atoi(os.Getenv("DB_PORT"))
 	cfg.Database = DatabaseConfig{
 		Host:     os.Getenv("DB_HOST"),
@@ -55,7 +54,6 @@ func (cfg *AppConfig) LoadVariables(envPath ...string) error {
 		Database: os.Getenv("DB_NAME"),
 	}
 
-	// AWS config
 	cfg.AWS = AWSConfig{
 		AccessKey: os.Getenv("AWS_ACCESS_KEY"),
 		SecretKey: os.Getenv("AWS_SECRET_KEY"),
@@ -63,7 +61,6 @@ func (cfg *AppConfig) LoadVariables(envPath ...string) error {
 		QueueURL:  os.Getenv("SQS_QUEUE_URL"),
 	}
 
-	// SMTP config
 	smtpPort, _ := strconv.Atoi(os.Getenv("SMTP_PORT"))
 	cfg.SMTP = SMTPConfig{
 		Host:     os.Getenv("SMTP_HOST"),

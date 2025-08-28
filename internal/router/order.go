@@ -3,13 +3,12 @@ package router
 import (
 	"worker-api/internal/handler"
 	"worker-api/internal/service"
-	"worker-api/pkg/database"
 
 	"github.com/labstack/echo"
+	"gorm.io/gorm"
 )
 
-func RegisterRoutes(e *echo.Echo, db *database.DB) {
-	// Order routes
+func RegisterRoutes(e *echo.Echo, db *gorm.DB) {
 	orderService := service.NewOrderService(db)
 	orderHandler := handler.NewOrderHandler(orderService)
 

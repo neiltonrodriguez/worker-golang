@@ -16,10 +16,8 @@ type MyLogger struct {
 var Logger MyLogger
 
 func NewLogger() MyLogger {
-	// create output configuration
 	output := zerolog.ConsoleWriter{Out: os.Stdout, TimeFormat: time.RFC3339}
 
-	// Format level: fatal, error, debug, info, warn
 	output.FormatLevel = func(i interface{}) string {
 		return strings.ToUpper(fmt.Sprintf("| %-6s|", i))
 	}
@@ -30,7 +28,6 @@ func NewLogger() MyLogger {
 		return fmt.Sprintf("%s", i)
 	}
 
-	// format error
 	output.FormatErrFieldName = func(i interface{}) string {
 		return fmt.Sprintf("%s: ", i)
 	}

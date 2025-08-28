@@ -18,7 +18,6 @@ func NewOrderService(db *gorm.DB) *OrderService {
 }
 
 func (s *OrderService) CreateOrder(ctx context.Context, request *domain.OrderRequest) error {
-	// Create order with waiting status
 	order := &domain.Order{
 		CustomerID:    request.CustomerID,
 		Amount:        request.Amount,
@@ -26,12 +25,10 @@ func (s *OrderService) CreateOrder(ctx context.Context, request *domain.OrderReq
 		Status:        "waiting",
 	}
 
-	// Save to database
 	if err := s.db.Create(order).Error; err != nil {
 		return err
 	}
 
-	// Send to SQS
 	messageBody, err := json.Marshal(order)
 	if err != nil {
 		return err
